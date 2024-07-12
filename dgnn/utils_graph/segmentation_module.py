@@ -19,6 +19,7 @@ import trainer
 from .helper_functions.segmentation_writer import SegmentationWriter
 from .helper_functions.dataset_wrapper import TILData
 from .helper_functions.postprocess import postprocess_tumorbed
+from .helper_functions.segmentation_model import *
 
 class TIL_Segmentation_Score:
     TILE_WRITE_SIZE=256

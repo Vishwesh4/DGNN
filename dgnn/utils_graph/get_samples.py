@@ -1,5 +1,6 @@
 """
-Module for loading/calculating the segmentation maps and sampling representative coordinates from different regions of tissues
+Module for loading/calculating the segmentation maps and sampling representative coordinates from different regions of tissues. Converts segmentation
+at 0.5MPP to density values at 1.0MPP where survival prediction is performed
 By default assumed no sampling
 """
 import os
@@ -84,10 +85,10 @@ class Get_Samples(TIL_Segmentation_Score):
         ## Get highlevel patchinformation by aggregation
         tumor_associated_stroma = np.asarray((self.til_outputs[:,1]==2),np.uint8)
         #get density by normalize with different values 
-        tumor_density = np.sum(np.asarray((self.til_outputs[:,1]==1),np.uint8), axis=(1,2))/(self.TILE_SIZE*self.TILE_SIZE)
-        rest_density = np.sum(np.asarray((self.til_outputs[:,1]==3),np.uint8), axis=(1,2))/(self.TILE_SIZE*self.TILE_SIZE)
-        stroma_density = np.sum(tumor_associated_stroma, axis=(1,2))/(self.TILE_SIZE*self.TILE_SIZE)
-        stils_density =  np.sum(tumor_associated_stroma*self.til_outputs[:,0],axis=(1,2))/(0.25*self.TILE_SIZE*self.TILE_SIZE)
+        tumor_density = np.sum(np.asarray((self.til_outputs[:,1]==1),np.uint8), axis=(1,2))/(self.TILE_WRITE_SIZE*self.TILE_WRITE_SIZE)
+        rest_density = np.sum(np.asarray((self.til_outputs[:,1]==3),np.uint8), axis=(1,2))/(self.TILE_WRITE_SIZE*self.TILE_WRITE_SIZE)
+        stroma_density = np.sum(tumor_associated_stroma, axis=(1,2))/(self.TILE_WRITE_SIZE*self.TILE_WRITE_SIZE)
+        stils_density =  np.sum(tumor_associated_stroma*self.til_outputs[:,0],axis=(1,2))/(0.25*self.TILE_WRITE_SIZE*self.TILE_WRITE_SIZE)
         #get heatmaps
         tumorbed_heatmap = self._get_heatmap(self.processed_tumorbed,True)
         tumor_heatmap = self._get_heatmap(tumor_density,self.force_compute)

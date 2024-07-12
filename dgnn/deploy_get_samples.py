@@ -26,6 +26,7 @@ from dplabtools.slides.processing import WSITissueMask
 from dplabtools.slides.patches import WholeImageGridPatches
 from dplabtools.slides import GenericSlide
 from utils.extract_patches import ExtractPatches
+from utils_graph.helper_functions.read_slide import read_slide
 
 #Set for TCGA, should be changed for other dataset
 GenericSlide.set_external_mpp(0.25)
@@ -73,13 +74,24 @@ def get_coordinates(slide_path):
 def perform_segmentation(wsi_path, til_scorer, all_portions=False):
     """
     Performs segmentation and returns the tumorbed map as well as tissue and TILs segmentation
+    We assume TCGA slides are around 0.25 MPP, hence we take double of the spacing. If less than 0.2 then we assume its an error
     """
+    slide, orig_spacing = read_slide(str(wsi_path))
+    if orig_spacing<0.3:
+        if orig_spacing<0.2:
+            #Slide has incorrect spacing information
+            orig_spacing = 0.25
+        #For dealing with 40x, convert to 20x
+        spacing = 2*orig_spacing
+    else:
+        #assuming the spacing to be around 0.5
+        spacing = orig_spacing
     try:
         patches_dataset = ExtractPatches(wsi_file=str(wsi_path),
                                 patch_size=SEG_TIL_SIZE,
                                 foreground_threshold=0.95,
                                 patch_stride=SEG_STRIDE,
-                                level_or_mpp = SEG_MPP,
+                                level_or_mpp = spacing,
                                 mask_threshold=0.1,
                                 mask_kernelsize=9,
                                 num_workers=10)        
@@ -87,9 +99,9 @@ def perform_segmentation(wsi_path, til_scorer, all_portions=False):
         print(f"Error: {e}")
         return None
     til_scorer.reset()
-    til_scorer.set_spacing(SEG_MPP)
+    til_scorer.set_spacing(spacing)
     all_densities, tumorbedmap = til_scorer.construct_density(patches_dataset.dataset,patches_dataset.coordinates,patches_dataset.template, patches_dataset.scan)
-    with open(str(OUTPUT_DIR/f"{wsi_path.stem.split('.')[0]}.npy"),"wb") as f:
+    with open(str(DENSITY_DIR/f"{wsi_path.stem.split('.')[0]}.npy"),"wb") as f:
         np.savez(f,all_densities=all_densities,tumorbedmap=tumorbedmap)
     all_densities = til_scorer.prepare_density(all_densities,tumorbedmap,wsi_path,all_portions)
     return all_densities
@@ -103,13 +115,13 @@ TILE_MPP=1.0
 #Segmentation happens at 0.5MPP. Model trained with bigger patch window
 SEG_TIL_SIZE=512
 SEG_STRIDE=0.5
-SEG_MPP=0.5
 
 ONCO_CODE = "UCEC"
 INPUT_DIR = list(Path(f"/aippmdata/public/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
 DENSITY_DIR = Path(f"/aippmdata/public/TCGA/TCGA-MIL-processed/DensityMaps/density_maps_{ONCO_CODE}")
-OUTPUT_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/DGNN_graphs/no_sample_{ONCO_CODE}_test")
+OUTPUT_DIR = Path(f"/aippmdata/public/TCGA/TCGA-MIL-processed/DGNN_graphs/no_sample_{ONCO_CODE}")
 FEATURE_DIR = Path(f"/aippmdata/public/TCGA/TCGA-extractedfeatures/TCGA_MIL_Patches_Ctrans_1MPP_{ONCO_CODE}")
+Path.mkdir(DENSITY_DIR, parents=True, exist_ok=True)
 Path.mkdir(OUTPUT_DIR, parents=True, exist_ok=True)
 
 TIL_PATH="/home/vramanathan/scratch/amgrp/TIGER_segmentation/Results/cell_seg_manet_resnet_weighted_focal_frozen_v2_bigger_v2/saved_models/Checkpoint_09Jun18_21_15_0.42.pt"
@@ -186,4 +198,4 @@ for paths in tqdm(INPUT_DIR):
         coords_new = coordinates
         density_new = None
         print("No samples were detected")
-    torch.save({"feat":feature_vec_new,"coord":coords_new,"density":density_new},str(OUTPUT_DIR/f"{slide_name}_featvec.pt"))
+    # torch.save({"feat":feature_vec_new,"coord":coords_new,"density":density_new},str(OUTPUT_DIR/f"{slide_name}_featvec.pt"))
