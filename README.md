@@ -15,11 +15,11 @@ The methodlogy consists of multiple steps:-
 3. Density based GNN (D-GNN): Using different graphs as input, train individual expert models for survival prediction
 4. Ensemble of D-GNNs (ED-GNNs): Using simple weighted linear ensemble between different experts for final survival prediction
 An overview of the methodology and its results are shown below
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig1.png" align="center" width="880" ><figcaption>Fig.1 - Overall Methodology. Different entities shown in different colors (Tumor(red), Tumor-associated stroma (blue) and others (green))</figcaption></a>
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig1.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.1 - Overall Methodology. Different entities shown in different colors (Tumor(red), Tumor-associated stroma (blue) and others (green))</figcaption></a>
 
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig2.png" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended regions statistics across multiple patients</figcaption></a> 
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig2.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended regions statistics across multiple patients</figcaption></a> 
 
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/heatmap.png" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended region in a tissue slide by Complete-graph D-GNN</figcaption></a> 
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/heatmap.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended region in a tissue slide by Complete-graph D-GNN</figcaption></a> 
 
 ## Getting Started
 
@@ -57,14 +57,13 @@ First, feature embeddings of individual patches are to be extracted from tissue 
 #### Segmentation Module
 Tissue and TILs segmentation are to be performed next which will be used in building graphs in the subsequent steps. The weights for the segmentation module can be downloaded [here](https://drive.google.com/drive/folders/1pfhOttn4JRxIyG422Ejbvz2-67LIDDPo?usp=sharing) and should be saved in location```./dgnn/utils_graph/segmentation_model_weights```. For performing segmentation and performing patch sampling based on the segmentation prediction, please run ```python ./dgnn/deploy_get_samples.py```. Segmentation predictions will be saved as density maps in ```./dataset/TCGA_processed/density_maps``` and sampled patches(in paper we don't sample patches) and their features will be saved in ```./dataset/TCGA_processed/patch_samples```.
 #### Graph Construction
-Before running the model on the dataset, complete graphs are to be constructed. This can be done using ```./dgnn/build_graph_complete.py```. The scripts constructs complete graphs(tumor-TAS-others) based on sampled patches. Subset graphs can be constructed using the complete graphs and density maps using ```python ./dgnn/build_graph_tissueinteraction.py --onco_code [str: BRCA/COADREAD/STAD/UCEC] --graph [str: tumor_stroma/tumor_rest/stroma_rest]```. All the graphs will be saved in ```./dataset/TCGA_processed/graphs```.
+Before running the model on the dataset, complete graphs are to be constructed. This can be done using ```./dgnn/build_graph_complete.py```. The scripts constructs complete graphs(tumor-stroma-others) based on sampled patches. Subset graphs can be constructed using the complete graphs and density maps using ```python ./dgnn/build_graph_tissueinteraction.py --onco_code [str: BRCA/COADREAD/STAD/UCEC] --graph [str: tumor_stroma/tumor_rest/stroma_rest]```. All the graphs will be saved in ```./dataset/TCGA_processed/graphs```.
 #### Model Training
-The model can be trained using ```main.py```. Examples for given in ```scripts/run_interactionmodels.sh```. For baselines, examples are given in ```scripts/run_baselines.sh```. Once the individual expert graphs are trained, the weights can be used in ED-GNN (linear ensemble) using ```ensemble_interaction_eval.py```
+The model can be trained using ```main.py```. Examples are given in ```scripts/run_interactionmodels.sh```. For baselines, examples are given in ```scripts/run_baselines.sh```. Once the individual expert graphs are trained, the weights can be used in ED-GNN (linear ensemble) using ```ensemble_interaction_eval.py```
 
 
 ## Acknowledgements
-We would like to express our gratitude to the creators of Patch-GCN [link](https://github.com/mahmoodlab/Patch-GCN) repository, from which most of the training code has been adapted. We would also thank the different authors of baseline models for making their code public and easy to use (GTN[link](https://github.com/vkola-lab/tmi2022), HvTSurv and TransMIL[link](https://github.com/szc19990412/HVTSurv/)).
-
+We would like to express our gratitude to the creators of Patch-GCN [link](https://github.com/mahmoodlab/Patch-GCN) repository, from which most of the training code has been adapted. We would also like to thank the authors of CtransPath and the authors of various baseline models for making their code public and easy to use.
 ## Contact
 You can reach the authors by raising an issue in this repo or
  email them at vishweshramanathan@mail.utoronto.ca/a.martel@utoronto.ca
