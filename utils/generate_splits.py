@@ -29,7 +29,7 @@ def seed_torch(seed=7):
 project_code = "STAD"
 # project_code = "COADREAD"
 
-root_dir = Path(f"/aippmdata/public/TCGA-{project_code}")
+root_dir = Path(f"../dataset/TCGA/TCGA-{project_code}")
 available_slides = list((root_dir / "images").rglob("*.svs"))
 short_form = [avail.stem.split(".")[0] for avail in available_slides]
 
@@ -59,7 +59,7 @@ clinical_data.reset_index(drop=True,inplace=True)
 
 seed_torch(1)
 
-slidecases_list = list(Path(f"/localdisk3/ramanav/TCGA_processed/TCGA_MIL_TILgraph/knn_no_sample_{project_code}/").glob("*.pt"))
+slidecases_list = list(Path(f"../dataset/TCGA_processed/graphs/knn_no_sample_{project_code}/").glob("*.pt"))
 slide_avoid = []
 for paths in slidecases_list:
     data = torch.load(paths)
@@ -76,8 +76,8 @@ temp = clinical_data[["case_id","censorship"]].drop_duplicates(subset="case_id")
 
 kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
 fold_splits = list(kfold.split(temp["case_id"].to_list(), temp["censorship"].values))
-clinical_data.to_csv(f"/home/vramanathan/Projects/TCGA_MIL/Patch-GCN/datasets_csv/tcga_{project_code.lower()}_all_clean_new.csv")
-save_dir = Path(f"/home/vramanathan/Projects/TCGA_MIL/Patch-GCN/splits/5foldcv/tcga_{project_code.lower()}_new")
+clinical_data.to_csv(f"../datasets_csv/tcga_{project_code.lower()}_all_clean_new.csv")
+save_dir = Path(f"../splits/5foldcv/tcga_{project_code.lower()}_new")
 Path.mkdir(save_dir,parents=True,exist_ok=True)
 for i in range(5):
     train_cases = temp.iloc[fold_splits[i][0]]["case_id"].to_list()

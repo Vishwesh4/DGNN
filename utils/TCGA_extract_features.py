@@ -5,7 +5,6 @@ import sys
 import os
 from collections import OrderedDict
 from pathlib import Path
-sys.path.append("/aippmdata/trained_models/Martel_lab/pathology/SSL_CTransPath/")
 import argparse
 
 import torch
@@ -22,7 +21,7 @@ from torch import nn, optim
 import torch.nn.functional as F
 
 from extract_patches import ExtractPatches
-# Pretrained model from https://github.com/Xiyue-Wang/TransPath
+# Pretrained model from https://github.com/Xiyue-Wang/TransPath. This path needs to be changed 
 from get_features_CTransPath import model, trnsfrms_val
 
 DEVICE = torch.device("cuda:0")
@@ -48,8 +47,8 @@ args = parser.parse_args()
 ONCO_CODE = args.onco_code
 
 
-INPUT_DIR = list(Path(f"/aippmdata/public/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
-OUTPUT_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/TCGA_MIL_Patches_Ctrans_1MPP_{ONCO_CODE}")
+INPUT_DIR = list(Path(f"../dataset/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
+OUTPUT_DIR = Path(f"../dataset/TCGA_processed/TCGA_MIL_Patches_Ctrans_1MPP_{ONCO_CODE}")
 Path.mkdir(OUTPUT_DIR,parents=False,exist_ok=True)
 processed_files = [files.stem.split("_")[0] for files in OUTPUT_DIR.glob("*.pt")]
 

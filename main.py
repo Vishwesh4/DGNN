@@ -82,13 +82,12 @@ def main(args):
 ### Training settings
 parser = argparse.ArgumentParser(description='Configurations for Survival Analysis on TCGA Data.')
 ### Checkpoint + Misc. Pathing Parameters
-parser.add_argument('--data_root_dir', type=str, default='/localdisk3/ramanav/TCGA_processed/DGNN_graphs/knn_no_sample_BRCA', help='data directory')
+parser.add_argument('--data_root_dir', type=str, default='./dataset/TCGA_processed/graphs/knn_no_sample_BRCA', help='data directory')
 parser.add_argument('--seed',            type=int, default=1, help='Random seed for reproducible experiment (default: 1)')
 parser.add_argument('--k',               type=int, default=5, help='Number of folds (default: 5)')
 parser.add_argument('--k_start',         type=int, default=-1, help='Start fold (Default: -1, last fold)')
 parser.add_argument('--k_end',           type=int, default=-1, help='End fold (Default: -1, first fold)')
-# parser.add_argument('--results_dir',     type=str, default='/home/vramanathan/scratch/amgrp/TCGA_Results/Patch-GCN', help='Results directory (Default: ./results)')
-parser.add_argument('--results_dir',     type=str, default='/localdisk3/ramanav/Results/TCGA_Results/5foldcv/', help='Results directory (Default: ./results)')
+parser.add_argument('--results_dir',     type=str, default='./results', help='Results directory (Default: ./results)')
 parser.add_argument('--which_splits',    type=str, default='5foldcv', help='Which splits folder to use in ./splits/ (Default: ./splits/5foldcv')
 parser.add_argument('--split_dir',       type=str, default='tcga_brca', help='Which cancer type within ./splits/<which_splits> to use for training. Used synonymously for "task" (Default: tcga_blca_100)')
 parser.add_argument('--log_data',        action='store_true', default=True, help='Log data using tensorboard')

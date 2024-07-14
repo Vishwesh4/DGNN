@@ -339,14 +339,15 @@ class Get_Samples(TIL_Segmentation_Score):
 
             
 if __name__=="__main__":
-    INPUT_FILE = list(Path("/aippmdata/public/TCGA-BRCA/images/").rglob("*.svs"))
-    SAVED_LOC = Path("/localdisk3/ramanav/TCGA_processed/TCGA_MIL_TILgraph/density_maps")
-    OUTPUT_LOC = Path("/home/vramanathan/Projects/TCGA_MIL/TILsGraph/images")
+    INPUT_FILE = list(Path("../../dataset/TCGA/TCGA-BRCA/images/").rglob("*.svs"))
+    SAVED_LOC = Path("../../dataset/TCGA_processed/density_maps")
+    OUTPUT_LOC = Path("../../results")
     processed_files = [files.stem.split("_")[0] for files in OUTPUT_LOC.glob("*.txt")]
     DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    TIL_PATH="/home/vramanathan/scratch/amgrp/TIGER_segmentation/Results/cell_seg_manet_resnet_weighted_focal_frozen_v2_bigger_v2/saved_models/Checkpoint_09Jun18_21_15_0.42.pt"
-    TUM_PATH = "/home/vramanathan/scratch/amgrp/tiger_models/Checkpoint_15Mar05_44_23.pt"
+    TIL_PATH="./segmentation_model_weights/segmentation_model_weights.pt"
+    TUM_PATH = "./segmentation_model_weights/tumorbed_network_weights.pt"
 
+    #example slides
     slides = [
         "TCGA-AO-A03P-01Z-00-DX1",
         "TCGA-A2-A0D4-01Z-00-DX1",

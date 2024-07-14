@@ -103,9 +103,9 @@ if __name__=="__main__":
 
     print(args)
 
-    INPUT_DIR = list(Path(f"/aippmdata/public/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
-    DENSITY_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/DGNN_graphs/knn_no_sample_{ONCO_CODE}")
-    OUTPUT_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/DGNN_graphs/knn_no_sample_{ONCO_CODE}_{SETTING}_v2_t")
+    INPUT_DIR = list(Path(f"../dataset/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
+    GRAPH_DIR = Path(f"../dataset/TCGA_processed/graphs/knn_no_sample_{ONCO_CODE}")
+    OUTPUT_DIR = Path(f"../dataset/TCGA_processed/graphs/knn_no_sample_{ONCO_CODE}_{SETTING}")
 
     if not OUTPUT_DIR.is_dir():
         os.mkdir(OUTPUT_DIR)
@@ -122,8 +122,8 @@ if __name__=="__main__":
         if slide_name in processed_files:
             print("Already processed...")
             continue
-        if (DENSITY_DIR/f"{slide_name}_graph.pt").exists():
-            data = torch.load(DENSITY_DIR/f"{slide_name}_graph.pt",map_location="cpu")
+        if (GRAPH_DIR/f"{slide_name}_graph.pt").exists():
+            data = torch.load(GRAPH_DIR/f"{slide_name}_graph.pt",map_location="cpu")
         else:
             continue
         coords = data.centroid

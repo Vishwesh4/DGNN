@@ -117,15 +117,15 @@ SEG_TIL_SIZE=512
 SEG_STRIDE=0.5
 
 ONCO_CODE = "UCEC"
-INPUT_DIR = list(Path(f"/aippmdata/public/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
-DENSITY_DIR = Path(f"/aippmdata/public/TCGA/TCGA-MIL-processed/DensityMaps/density_maps_{ONCO_CODE}")
-OUTPUT_DIR = Path(f"/aippmdata/public/TCGA/TCGA-MIL-processed/DGNN_graphs/no_sample_{ONCO_CODE}")
-FEATURE_DIR = Path(f"/aippmdata/public/TCGA/TCGA-extractedfeatures/TCGA_MIL_Patches_Ctrans_1MPP_{ONCO_CODE}")
+INPUT_DIR = list(Path(f"../dataset/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
+DENSITY_DIR = Path(f"../dataset/TCGA_processed/density_maps/density_maps_{ONCO_CODE}")
+OUTPUT_DIR = Path(f"../dataset/TCGA_processed/patch_samples/no_sample_{ONCO_CODE}")
+FEATURE_DIR = Path(f"../dataset/TCGA_processed/features/TCGA_MIL_Patches_Ctrans_1MPP_{ONCO_CODE}")
 Path.mkdir(DENSITY_DIR, parents=True, exist_ok=True)
 Path.mkdir(OUTPUT_DIR, parents=True, exist_ok=True)
 
-TIL_PATH="/home/vramanathan/scratch/amgrp/TIGER_segmentation/Results/cell_seg_manet_resnet_weighted_focal_frozen_v2_bigger_v2/saved_models/Checkpoint_09Jun18_21_15_0.42.pt"
-TUM_PATH = "/home/vramanathan/scratch/amgrp/tiger_models/Checkpoint_15Mar05_44_23.pt"
+TIL_PATH="./utils_graph/segmentation_model_weights/segmentation_model_weights.pt"
+TUM_PATH = "/utils_graph/segmentation_model_weights/tumorbed_network_weights.pt"
 
 log_text = ""
 processed_files = [files.stem.split("_")[0] for files in OUTPUT_DIR.glob("*.pt")]

@@ -115,13 +115,12 @@ def single_fold_computation(args, val_loader, model_list, data_dir_list):
 def get_args():
     parser = argparse.ArgumentParser(description='Configurations for Survival Analysis on TCGA Data.')
     ### Checkpoint + Misc. Pathing Parameters
-    parser.add_argument('--data_root_dir', type=str, default='/localdisk3/ramanav/TCGA_processed/TCGA_MIL_TILgraph/knn_no_sample_BRCA/', help='data directory')
+    parser.add_argument('--data_root_dir', type=str, default='./dataset/TCGA_processed/knn_no_sample_BRCA/', help='data directory')
     parser.add_argument('--seed',            type=int, default=1, help='Random seed for reproducible experiment (default: 1)')
     parser.add_argument('--k',               type=int, default=5, help='Number of folds (default: 5)')
     parser.add_argument('--k_start',         type=int, default=-1, help='Start fold (Default: -1, last fold)')
     parser.add_argument('--k_end',           type=int, default=-1, help='End fold (Default: -1, first fold)')
-    # parser.add_argument('--results_dir',     type=str, default='/home/vramanathan/scratch/amgrp/TCGA_Results/Patch-GCN', help='Results directory (Default: ./results)')
-    parser.add_argument('--results_dir',     type=str, default='/localdisk3/ramanav/Results/TCGA_Results/5foldcv/', help='Results directory (Default: ./results)')
+    parser.add_argument('--results_dir',     type=str, default='./results', help='Results directory (Default: ./results)')
     parser.add_argument('--which_splits',    type=str, default='5foldcv', help='Which splits folder to use in ./splits/ (Default: ./splits/5foldcv')
     parser.add_argument('--split_dir',       type=str, default='tcga_brca', help='Which cancer type within ./splits/<which_splits> to use for training. Used synonymously for "task" (Default: tcga_blca_100)')
     parser.add_argument('--log_data',        action='store_true', default=True, help='Log data using tensorboard')
@@ -224,25 +223,25 @@ if __name__=="__main__":
 
     cancerset_name = args.split_dir.split("_")[-1]
     if cancerset_name=="stad":
-        result_dir_list = ["tcga_stad_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_18_50_00",
-                        "tcga_stad_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_18_50_57",
-                        "tcga_stad_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_18_51_57",
-                        "tcga_stad_GTN_nll_surv_a0.0_5foldcv_gc32_s1_23Jan_17_06_37"]
+        result_dir_list = ["tcga_stad_tumor_stroma",
+                        "tcga_stad_tumor_rest",
+                        "tcga_stad_stroma_rest",
+                        "tcga_stad_complete"]
     elif cancerset_name=="coadread":
-        result_dir_list = ["tcga_coadread_GTN_nll_surv_a0.0_5foldcv_gc32_s1_30Jan_18_56_30",
-                   "tcga_coadread_GTN_nll_surv_a0.0_5foldcv_gc32_s1_30Jan_18_57_33",
-                   "tcga_coadread_GTN_nll_surv_a0.0_5foldcv_gc32_s1_30Jan_18_58_46",
-                   "tcga_coadread_GTN_nll_surv_a0.0_5foldcv_gc32_s1_30Jan_14_20_46"]
+        result_dir_list = ["tcga_coadread_tumor_stroma",
+                   "tcga_coadread_tumor_rest",
+                   "tcga_coadread_stroma_rest",
+                   "tcga_coadread_complete"]
     elif cancerset_name=="brca":
-        result_dir_list = ["tcga_brca_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_15_00_35",
-                            "tcga_brca_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_15_01_44",
-                        "tcga_brca_GTN_nll_surv_a0.0_5foldcv_gc32_s1_29Jan_15_03_21",
-                        "tcga_brca_GTN_nll_surv_a0.0_5foldcv_gc32_s1_22Jan_12_48_47"]
+        result_dir_list = ["tcga_brca_tumor_stroma",
+                            "tcga_brca_tumor_rest",
+                        "tcga_brca_stroma_rest",
+                        "tcga_brca_complete"]
     elif cancerset_name=="ucec":
-        result_dir_list = ["tcga_ucec_GTN_nll_surv_a0.0_5foldcv_gc32_s1_02Feb_14_50_10",
-                        "tcga_ucec_GTN_nll_surv_a0.0_5foldcv_gc32_s1_02Feb_14_49_59",
-                        "tcga_ucec_GTN_nll_surv_a0.0_5foldcv_gc32_s1_02Feb_16_57_58",
-                        "tcga_ucec_GTN_nll_surv_a0.0_5foldcv_gc32_s1_22Jan_17_38_02"]
+        result_dir_list = ["tcga_ucec_tumor_stroma",
+                        "tcga_ucec_tumor_rest",
+                        "tcga_ucec_stroma_rest",
+                        "tcga_ucec_complete"]
     else:
         raise ValueError(f"Dataset {cancerset_name} is not known, please specify the correct dataset")
     c_index_folds = []

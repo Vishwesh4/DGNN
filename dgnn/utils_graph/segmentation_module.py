@@ -223,7 +223,6 @@ class TIL_Segmentation_Score:
                                             encoder_name= "resnet34",
                                             encoder_depth= 5,
                                             encoder_weights=None,
-                                            encoder_transfer= "/home/vramanathan/scratch/amgrp/tiger_models/SSL_tiger/SSL_34/model_50.pt",
                                             decoder_use_batchnorm= True,
                                             decoder_channels= [256, 128, 64, 32, 16],
                                             decoder_pab_channels= 64,

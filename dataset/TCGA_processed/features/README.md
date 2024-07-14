@@ -1,0 +1,1 @@
+Feature maps (feature embeddings for all the patches in a whole slide image) from the script `TCGA_extract_features.py` are saved here.

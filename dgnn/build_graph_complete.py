@@ -142,9 +142,9 @@ if __name__=="__main__":
     ADD_PE = True
 
     ONCO_CODE = "UCEC"
-    INPUT_DIR = list(Path(f"/aippmdata/public/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
-    DENSITY_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/DGNN_graphs/no_sample_{ONCO_CODE}/")
-    OUTPUT_DIR = Path(f"/localdisk3/ramanav/TCGA_processed/DGNN_graphs/knn_no_sample_{ONCO_CODE}")
+    INPUT_DIR = list(Path(f"../dataset/TCGA/TCGA-{ONCO_CODE}/images/").rglob("*.svs"))
+    DENSITY_DIR = Path(f"../dataset/TCGA_processed/patch_samples/no_sample_{ONCO_CODE}/")
+    OUTPUT_DIR = Path(f"../dataset/TCGA_processed/graphs/knn_no_sample_{ONCO_CODE}")
     if not OUTPUT_DIR.is_dir():
         os.mkdir(OUTPUT_DIR)
 
