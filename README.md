@@ -66,7 +66,7 @@ The model can be trained using ```main.py```. Examples are given in ```scripts/r
 We would like to express our gratitude to the creators of Patch-GCN [link](https://github.com/mahmoodlab/Patch-GCN) repository, from which most of the training code has been adapted. We would also like to thank the authors of CtransPath and the authors of various baseline models for making their code public and easy to use.
 ## Contact
 You can reach the authors by raising an issue in this repo or
- email them at vishweshramanathan@mail.utoronto.ca/a.martel@utoronto.ca
+ email them at vishwesh.ramanathan@mail.utoronto.ca/a.martel@utoronto.ca
 
 ## Cite
 ```
