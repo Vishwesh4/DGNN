@@ -15,11 +15,11 @@ The methodlogy consists of multiple steps:-
 3. Density based GNN (D-GNN): Using different graphs as input, train individual expert models for survival prediction
 4. Ensemble of D-GNNs (ED-GNNs): Using simple weighted linear ensemble between different experts for final survival prediction
 An overview of the methodology and its results are shown below
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig1.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.1 - Overall Methodology. Different entities shown in different colors (Tumor(red), Tumor-associated stroma (blue) and others (green))</figcaption></a>
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig1.png" align="center" width="880" ><figcaption>Fig.1 - Overall Methodology. Different entities shown in different colors (Tumor(red), Tumor-associated stroma (blue) and others (green))</figcaption></a>
 
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig2.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended regions statistics across multiple patients</figcaption></a> 
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/fig2.png" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended regions statistics across multiple patients</figcaption></a> 
 
-<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/heatmap.png#gh-light-mode-only" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended region in a tissue slide by Complete-graph D-GNN</figcaption></a> 
+<img src="https://github.com/Vishwesh4/DGNN/blob/master/images/heatmap.png" align="center" width="880" ><figcaption>Fig.2 - Visualization of attended region in a tissue slide by Complete-graph D-GNN</figcaption></a> 
 
 ## Getting Started
 
