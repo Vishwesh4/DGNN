@@ -1,6 +1,8 @@
 # Ensemble of Prior-guided Expert Graph Models for Survival Prediction in Digital Pathology
-Code and data for the manuscript: **Ensemble of Prior-guided Expert Graph Models for Survival Prediction in Digital Pathology**
-
+Code and data for the manuscript: **Ensemble of Prior-guided Expert Graph Models for Survival Prediction in Digital Pathology**  
+Link for OpenReview: [https://papers.miccai.org/miccai-2024/291-Paper2280.html]  
+Link for full paper: [https://papers.miccai.org/miccai-2024/paper/2280_paper.pdf]  
+Link for supplementary: [https://papers.miccai.org/miccai-2024/supp/2280_supp.pdf]  
 ## Description
 
 This repository contains the code and data of the paper "Ensemble of Prior-guided Expert Graph Models for Survival Prediction in Digital Pathology", which is accepted at MICCAI 2024 for publication.
